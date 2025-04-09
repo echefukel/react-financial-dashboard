@@ -55,5 +55,31 @@ export const transactionData = [
     logo: "https://cdn-icons-png.flaticon.com/512/2702/2702602.png",
 
     },
+    {
+        id: 8,
+        name: "iPhone 15",
+        business: "Apple",
+        type: "Mobile",
+        date: "10 September 2024",
+        logo: "https://cdn-icons-png.flaticon.com/512/179/179309.png",
+    },
+    {
+        id: 9,
+        name: "Galaxy S21",
+        business: "Samsung",
+        type: "Mobile",
+        date: "15 October 2024",
+        logo: "https://cdn-icons-png.flaticon.com/512/2702/2702602.png",
+    },
+    {
+        id: 10,
+        name: "Surface Laptop 4",
+        business: "Microsoft",
+        type: "Laptop",
+        date: "20 November 2024",
+        logo: "https://cdn-icons-png.flaticon.com/512/732/732221.png",
+    },
+
+
     
 ]
