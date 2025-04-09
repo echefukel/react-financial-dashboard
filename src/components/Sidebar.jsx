@@ -17,10 +17,16 @@ const Sidebar = () => {
 
   const toggleSidebar = () => setIsOpen(!isOpen);
 
+  const handleLinkClick = () => {
+    if (isOpen) {
+      setIsOpen(false);
+    }
+  };
+
   return (
     <>
       {/* Mobile Navbar */}
-      <nav className="md:hidden fixed top-0 left-0 w-full flex items-center justify-between bg-white px-4 h-20 shadow z-100">
+      <nav className="md:hidden fixed top-0 left-0 w-full flex items-center justify-between bg-white px-4 h-20 shadow z-20">
         <h1 className="font-bold text-xl text-black font-Urbanist">Maglo.</h1>
         <button onClick={toggleSidebar}>
           {isOpen ? (
@@ -31,40 +37,52 @@ const Sidebar = () => {
         </button>
       </nav>
 
-      {/* Mobile Sidebar */}
+      {/* Sidebar for mobile screens */}
       <div
         className={`fixed top-0 left-0 h-full w-full bg-[#e8e8e8] z-50 shadow-lg transform transition-transform duration-300 ease-in-out md:hidden ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div className="p-8 mt-20">
-          <ul className="space-y-8  ">
+          <ul className="space-y-8">
             <li className="flex items-center space-x-3 hover:bg-[#c8ee44] px-3 py-2 rounded-md">
               <FaHome />
-              <Link to="/">Dashboard</Link>
+              <Link to="/" onClick={handleLinkClick}>
+                Dashboard
+              </Link>
             </li>
             <li className="flex items-center space-x-3 hover:bg-[#c8ee44] px-3 py-2 rounded-md">
               <FaMoneyBill />
-              <Link to="/transactions">Transactions</Link>
+              <Link to="/transactions" onClick={handleLinkClick}>
+                Transactions
+              </Link>
             </li>
             <li className="flex items-center space-x-3 hover:bg-[#c8ee44] px-3 py-2 rounded-md">
               <FaFileInvoice />
-              <Link to="/invoices">Invoices</Link>
+              <Link to="/invoices" onClick={handleLinkClick}>
+                Invoices
+              </Link>
             </li>
             <li className="flex items-center space-x-3 hover:bg-[#c8ee44] px-3 py-2 rounded-md">
               <FaWallet />
-              <Link to="/mywallet">My Wallet</Link>
+              <Link to="/mywallet" onClick={handleLinkClick}>
+                My Wallet
+              </Link>
             </li>
             <li className="flex items-center space-x-3 hover:bg-[#c8ee44] px-3 py-2 rounded-md">
               <FaCogs />
-              <Link to="/settings">Settings</Link>
+              <Link to="/settings" onClick={handleLinkClick}>
+                Settings
+              </Link>
             </li>
           </ul>
 
-          <div className="mt-30 space-y-6 ">
+          <div className="mt-30 space-y-6">
             <div className="flex items-center space-x-3">
               <FaQuestionCircle />
-              <Link to="/help">Help</Link>
+              <Link to="/help" onClick={handleLinkClick}>
+                Help
+              </Link>
             </div>
             <div className="flex items-center space-x-3">
               <FaSignOutAlt />
@@ -76,7 +94,7 @@ const Sidebar = () => {
         </div>
       </div>
 
-      {/* Overlay to close sidebar */}
+      {/* Overlay for closing the sidebar */}
       {isOpen && (
         <div
           className="fixed inset-0 bg-black bg-opacity-40 z-40 md:hidden"
@@ -84,8 +102,8 @@ const Sidebar = () => {
         ></div>
       )}
 
-      {/* Desktop Sidebar */}
-      <aside className="bg-[#e8e8e8] w-64 h-screen p-4 fixed top-0 left-0 shadow-lg hidden md:block">
+      {/* Sidebar for desktop screens */}
+      <aside className="bg-[#e8e8e8] w-64 h-screen p-4 fixed top-0 left-0 shadow-lg hidden md:block z-30">
         <h1 className="font-bold tracking-wide text-center text-black text-2xl font-Urbanist">
           Maglo.
         </h1>
@@ -127,6 +145,9 @@ const Sidebar = () => {
           </div>
         </div>
       </aside>
+
+      {/* Content margin adjustment for mobile */}
+      <div className="md:hidden mt-20"></div>
     </>
   );
 };
