@@ -1,5 +1,5 @@
 import React from "react";
-import OverlapCard from "./overlapCard"; // Assuming you have this component in the same directory
+import OverlapCard from "./OverlapCard"; // Assuming you have this component in the same directory
 const WalletInfo = () => {
   return (
     <div className="w-full space-y-4 relative">
