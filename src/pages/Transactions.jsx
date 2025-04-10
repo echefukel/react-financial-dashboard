@@ -17,7 +17,6 @@ const Transactions = () => {
   return (
     <div className="p-4 md:p-6 bg-white rounded-2xl shadow-md w-full">
       {/* Page Title */}
-      <h2 className="text-xl font-semibold mb-4 text-gray-800">Transactions</h2>
 
       {/* Search Input */}
       <div className="mb-10">

@@ -17,9 +17,7 @@ const Invoices = () => {
   return (
     <div className="p-4 md:p-6 bg-white rounded-2xl shadow-md w-full">
       {/* Page Title */}
-      <h2 className="text-xl font-semibold mb-4 text-gray-800 md:hidden">
-        Invoices
-      </h2>
+      
 
       {/* Search and Buttons */}
       <div className="flex flex-col gap-6 justify-between items-center mb-6 lg:flex-row ">

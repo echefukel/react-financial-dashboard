@@ -1,7 +1,6 @@
 
 import React from 'react'
 import WalletLeft from '../components/WalletLeft'
-import { Wallet } from 'lucide-react'
 import WalletRight from '../components/WalletRight'
 
 const MyWallets = () => {

@@ -20,7 +20,6 @@ const Layout = () =>{
         '/mywallet' : 'My Wallets',
         '/help' : 'Help'
     };
-    console.log(location);
    const currentSection = sectionMapping[location.pathname];
     return (
         <div className="flex font-Poppins">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   FaHome,
@@ -11,9 +11,22 @@ import {
   FaTimes,
   FaBars,
 } from "react-icons/fa";
-
+import LogoutOverlay from "./LogoutOverlay";
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+
+  const [showLogoutOverlay, setShowLogoutOverlay] = useState(()=>{
+
+    const storedValue = localStorage.getItem("showLogoutOverlay");
+    
+      return storedValue === "true"|| false
+  });
+  // save to local storage when state changes
+  useEffect(() => {
+    localStorage.setItem("showLogoutOverlay", showLogoutOverlay);
+  }, [showLogoutOverlay]);
+
 
   const toggleSidebar = () => setIsOpen(!isOpen);
 
@@ -23,10 +36,19 @@ const Sidebar = () => {
     }
   };
 
+  const handleLogout = () => {
+    setShowLogoutOverlay(true);
+  };
+
+  const closeLogoutOverlay = () => {
+    setShowLogoutOverlay(false);
+    localStorage.removeItem(showLogoutOverlay)
+  };
+
   return (
     <>
       {/* Mobile Navbar */}
-      <nav className="md:hidden fixed top-0 left-0 w-full flex items-center justify-between bg-white px-4 h-20 shadow z-20">
+      <nav className="md:hidden fixed top-0 left-0 w-full flex items-center justify-between bg-white px-4 h-20 shadow-md z-100">
         <h1 className="font-bold text-xl text-black font-Urbanist">Maglo.</h1>
         <button onClick={toggleSidebar}>
           {isOpen ? (
@@ -86,7 +108,10 @@ const Sidebar = () => {
             </div>
             <div className="flex items-center space-x-3">
               <FaSignOutAlt />
-              <button className="bg-red-600 text-white px-5 py-3 rounded-md shadow-md">
+              <button
+                className="bg-red-600 text-white px-5 py-3 rounded-md shadow-md"
+                onClick={handleLogout}
+              >
                 Logout
               </button>
             </div>
@@ -94,13 +119,7 @@ const Sidebar = () => {
         </div>
       </div>
 
-      {/* Overlay for closing the sidebar */}
-      {isOpen && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-40 z-40 md:hidden"
-          onClick={toggleSidebar}
-        ></div>
-      )}
+      
 
       {/* Sidebar for desktop screens */}
       <aside className="bg-[#e8e8e8] w-64 h-screen p-4 fixed top-0 left-0 shadow-lg hidden md:block z-30">
@@ -138,7 +157,10 @@ const Sidebar = () => {
             </div>
             <div className="space-x-5 flex items-center px-3 py-2">
               <FaSignOutAlt />
-              <button className="bg-red-600 text-white px-6 py-2 rounded-md">
+              <button
+                className="bg-red-600 text-white px-6 py-2 rounded-md"
+                onClick={handleLogout}
+              >
                 Logout
               </button>
             </div>
@@ -146,8 +168,11 @@ const Sidebar = () => {
         </div>
       </aside>
 
-      {/* Content margin adjustment for mobile */}
-      <div className="md:hidden mt-20"></div>
+      
+      {/* Logout Overlay */}
+      {showLogoutOverlay && (
+        <LogoutOverlay onClose={closeLogoutOverlay} />
+      )}
     </>
   );
 };

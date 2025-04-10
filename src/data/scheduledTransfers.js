@@ -32,7 +32,7 @@ export const scheduledTransfers = [
         avatar: "https://randomuser.me/api/portraits/men/78.jpg",
       },
       {
-        id: 5,
+        id: 6,
         name: "Barrack Obama",
         date: "April 14, 2025 at 11:00",
         amount: 228.00,

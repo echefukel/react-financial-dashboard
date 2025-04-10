@@ -6,7 +6,6 @@ import { FaPlus } from "react-icons/fa";
 const WalletLeft = () => {
   return (
     <div className="w-full lg:w-[40%] px-4">
-      <h2 className="text-xl font-semibold text-gray-800 mb-4 md:hidden">My Wallets</h2>
 
       {/* Cards */}
       <div className="flex flex-col gap-4">

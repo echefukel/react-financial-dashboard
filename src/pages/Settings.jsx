@@ -1,53 +1,87 @@
 // src/pages/SettingsPage.jsx
-import React, { useState } from "react";
+import { AlertCircle } from "lucide-react";
+import React, { useState, } from "react";
 import { FaPen } from "react-icons/fa";
 
 const SettingsPage = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const [isPasswordVisible2, setIsPasswordVisible2] = useState(false);
+  const [profileImage, setProfileImage] = useState(null);
 
-  const [formData, setFormData] = useState({
-    firstName: "Mahfuzul Islam",
-    lastName: "Nabil",
-    dob: "1998-09-27", 
-    mobile: "+123 456 7890",
-    email: "hellouihut@gmail.com",
-    newPassword: "",
-    confirmPassword: "",
+  const [formData, setFormData] = useState(() => {
+    const savedData = localStorage.getItem("userSettings");
+    return savedData
+      ? JSON.parse(savedData)
+      : {
+          firstName: "",
+          lastName: "",
+          dob: "",
+          mobile: "",
+          email: "",
+          newPassword: "",
+          confirmPassword: "",
+          profileImage: null,
+          
+        };
   });
+
+  const {
+    firstName,
+    lastName,
+    dob,
+    mobile,
+    email,
+    newPassword,
+    confirmPassword,
+  
+
+    } = formData;
+
+  const isFormValid =
+    firstName && lastName && dob && mobile && email && newPassword && confirmPassword && profileImage;
 
   const toggleEdit = () => {
     setIsEditing((prev) => !prev);
   };
+
   const handleSave = () => {
-    
+    localStorage.setItem("userSettings", JSON.stringify(formData));
     console.log("Saved data:", formData);
     setIsEditing(false);
+    
   };
+
   const handlePasswordVisibility = () => {
     setIsPasswordVisible((prev) => !prev);
   };
+
   const handlePasswordVisibility2 = () => {
     setIsPasswordVisible2((prev) => !prev);
   };
-
+const handleImageUpload = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = () => {
+      setProfileImage(reader.result);
+      setFormData({ ...formData, profileImage: reader.result });
+    };
+    reader.readAsDataURL(file);
+  }
+};
   return (
     <div className="p-6 md:p-10 lg:p-16">
-      {/* Header Section */}
       <div className="flex justify-between items-start mb-10">
         <div>
-          {/* Page Title */}
           <h2 className="text-xl md:text-2xl font-semibold text-gray-900">
             Account Information
           </h2>
-          {/* Subtitle */}
           <p className="text-sm text-gray-400 mt-1">
             Update your account information
           </p>
         </div>
 
-        {/* Edit/Cancel Button */}
         <button
           onClick={toggleEdit}
           className="flex items-center gap-1 text-green-600 hover:underline focus:outline-none"
@@ -69,9 +103,9 @@ const SettingsPage = () => {
           {isEditing ? "Cancel" : "Edit"}
         </button>
 
-        {/* Save Button (only visible in editing mode) */}
         {isEditing && (
           <button
+            disabled={!isFormValid}
             onClick={handleSave}
             className="mt-4 bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
           >
@@ -80,15 +114,12 @@ const SettingsPage = () => {
         )}
       </div>
 
-      {/* Personal Information Section */}
       <div>
         <h3 className="text-lg font-semibold text-gray-800 mb-6">
           Personal Information
         </h3>
 
-        {/* Form for Personal Information */}
         <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* First Name Input */}
           <div>
             <label className="block text-sm text-gray-600 mb-1">
               First Name
@@ -104,7 +135,6 @@ const SettingsPage = () => {
             />
           </div>
 
-          {/* Last Name Input */}
           <div>
             <label className="block text-sm text-gray-600 mb-1">Last</label>
             <input
@@ -118,7 +148,6 @@ const SettingsPage = () => {
             />
           </div>
 
-          {/* Date of Birth Input */}
           <div>
             <label className="block text-sm text-gray-600 mb-1">
               Date of Birth
@@ -134,7 +163,6 @@ const SettingsPage = () => {
             />
           </div>
 
-          {/* Mobile Number Input */}
           <div>
             <label className="block text-sm text-gray-600 mb-1">
               Mobile Number
@@ -150,7 +178,6 @@ const SettingsPage = () => {
             />
           </div>
 
-          {/* Email Input (Full Width) */}
           <div className="md:col-span-2">
             <label className="block text-sm text-gray-600 mb-1">Email</label>
             <div className="flex items-center border border-gray-200 rounded-md bg-gray-100">
@@ -167,7 +194,6 @@ const SettingsPage = () => {
             </div>
           </div>
 
-          {/* New Password Input */}
           <div>
             <label className="block text-sm text-gray-600 mb-1">
               New Password
@@ -184,7 +210,6 @@ const SettingsPage = () => {
                 disabled={!isEditing}
                 className="w-full py-2 px-2 bg-transparent text-sm focus:outline-none"
               />
-              {/* Toggle Password Visibility */}
               <span
                 className="px-3 text-gray-400 cursor-pointer"
                 onClick={handlePasswordVisibility}
@@ -194,7 +219,6 @@ const SettingsPage = () => {
             </div>
           </div>
 
-          {/* Confirm Password Input */}
           <div>
             <label className="block text-sm text-gray-600 mb-1">
               Confirm Password
@@ -211,7 +235,6 @@ const SettingsPage = () => {
                 disabled={!isEditing}
                 className="w-full py-2 px-2 bg-transparent text-sm focus:outline-none"
               />
-              {/* Toggle Confirm Password Visibility */}
               <span
                 className="px-3 text-gray-400 cursor-pointer"
                 onClick={handlePasswordVisibility2}
@@ -220,8 +243,22 @@ const SettingsPage = () => {
               </span>
             </div>
           </div>
+          {/* handle image upload */}
+          <div>
+            <label className="block text-sm text-gray-600 mb-1">
+              Profile Picture
+            </label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageUpload}
+              disabled={!isEditing}
+              className="w-full border border-gray-200 px-4 py-2 rounded-md bg-gray-100 text-sm"
+            />
+          </div>
         </form>
       </div>
+      
     </div>
   );
 };
